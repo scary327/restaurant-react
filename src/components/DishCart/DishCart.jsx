@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import styles from './DishCart.module.css';
 
-const DishCard = ({ dish, addCartId }) => {
+const DishCard = (props) => {
+
+    const {dish, addCartId} = props;
 
     return (
         <li className={styles['dish-card']}>

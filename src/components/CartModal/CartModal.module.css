@@ -19,7 +19,7 @@
     align-items: flex-start;
     row-gap: 1rem;
     display: flex;
-    max-width: 80vw;
+    max-width: 60vw;
     height: auto;
     background: white;
     border-radius: 8px;
@@ -62,7 +62,8 @@
 }
 
 .dish-cart {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
     column-gap: 20px;
 }
 
@@ -82,4 +83,15 @@
     font-weight: bold;
     user-select: none;
     cursor: pointer;
+}
+
+.result-price {
+    font-size: 2rem;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    color: slategray;
+    margin-left: auto;
+}
+
+.result-price > span {
+    text-decoration: underline;
 }

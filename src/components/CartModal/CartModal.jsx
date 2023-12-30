@@ -1,10 +1,13 @@
 import React from "react";
 import styles from './CartModal.module.css';
 import classNames from "classnames";
+import { Link } from "react-router-dom";
 
 const CartModal = (props) => {
 
-    const {openCart, setOpenCart, cartDishes} = props;
+    const {openCart, setOpenCart, cartDishes, dishPlus, dishMinus, dishDelete} = props;
+
+    const totalPrice = cartDishes.reduce((total, dish) => total + dish.price * dish.count, 0);
 
     return (
         <div className={classNames(styles['cart-container'], {[styles.open]: openCart})}>
@@ -22,7 +25,10 @@ const CartModal = (props) => {
                         </li>
                     ))}
                 </ul>
+                <div className={styles['result-price']}>Общая стоимость <span>{totalPrice}</span> ₽</div>
+                <Link to="/PlacingOrder">
                 <button className={styles['order-button']}>Оформить заказ</button>
+                </Link>
             </div>
         </div>
     );
