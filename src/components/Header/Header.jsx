@@ -1,27 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo } from "react";
 import styles from './Header.module.css';
 
 const Header = (props) => {
-    const [dishes, setDishes] = useState([]);
-    const { setSelectedCategory, setOpenCart} = props;
+    const { setSelectedCategory, setOpenCart, dishes} = props;
 
-    useEffect(() => {
-      fetch('/db.json')
-        .then(response => response.json())
-        .then(data => setDishes(data));
-    }, []);
-
-    const getUniqueCategories = () => {
+    const uniqueCategories = useMemo(() => {
         const categories = dishes.map(dish => dish.category);
-        const uniqueCategories = [...new Set(categories)];
-        return uniqueCategories;
-    }
+        return [...new Set(categories)];
+      }, [dishes]);
+      
 
     return (
         <div className={styles['header-container']}>
             <div className={styles['logo']} onClick={() => setSelectedCategory('All')}>Rest</div>
             <ul className={styles['categories-list']}>
-                {getUniqueCategories().map(category => (
+                {uniqueCategories.map(category => (
                     <li key={category} className={styles['categories-elem']} onClick={() => setSelectedCategory(category)}>{category}</li>
                 ))}
             </ul>

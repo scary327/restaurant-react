@@ -1,0 +1,56 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+}
+
+.radio-container {
+    display: flex;
+    column-gap: 50px;
+}
+
+.form-container > span {
+    font-size: 2rem;
+    font-weight: bold;
+    color: chocolate;
+}
+
+.radio-container > label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: chocolate;
+}
+
+.radio-container > label > input {
+    margin-right: 5px;
+}
+
+.payment-method-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.payment-method-container > label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: chocolate;
+}
+
+.payment-method-container > label > input {
+    margin-right: 5px;
+}
+
+.form-button {
+    max-width: 200px;
+    padding: 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    user-select: none;
+    background-color: orange;
+    color: white;
+}
+
+.form-button:hover {
+    background-color: chocolate;
+}

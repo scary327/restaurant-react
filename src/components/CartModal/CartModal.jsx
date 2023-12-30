@@ -2,27 +2,27 @@ import React from "react";
 import styles from './CartModal.module.css';
 import classNames from "classnames";
 import { Link } from "react-router-dom";
+import { DishOnCart } from "../DishOnCart/DishOnCart";
 
 const CartModal = (props) => {
 
-    const {openCart, setOpenCart, cartDishes, dishPlus, dishMinus, dishDelete} = props;
-
-    const totalPrice = cartDishes.reduce((total, dish) => total + dish.price * dish.count, 0);
+    const {openCart, setOpenCart, cartDishes, dishPlus, dishMinus, dishDelete, totalPrice} = props;
 
     return (
         <div className={classNames(styles['cart-container'], {[styles.open]: openCart})}>
             <div className={styles["cart-description"]}>
-                <div className={styles['close-modal']} onClick={() => setOpenCart(false)}>Закрыть</div>
+                <button className={styles['close-modal']} onClick={() => setOpenCart(false)}>Закрыть</button>
                 <ul className={styles['dishes-list']}>
                     {cartDishes.map((dish) => (
-                        <li key={dish.id} className={styles['dish-cart']}>
-                            <p className={styles['dish-name']}>{dish.name}</p>
-                            <p className={styles['dish-count']}>Количество: {dish.count}</p>
-                            <p className={styles['dish-price']}>Цена: {dish.price * dish.count} ₽</p>
-                            <button className={styles['dish-cart__buttons']} onClick={() => dishPlus(dish.id)}>+</button>
-                            <button className={styles['dish-cart__buttons']} onClick={() => dishMinus(dish.id)}>-</button>
-                            <button className={styles['dish-cart__buttons']} onClick={() => dishDelete(dish.id)}>Удалить</button>
-                        </li>
+                        <DishOnCart
+                            key={dish.id}
+                            id={dish.id}
+                            name={dish.name}
+                            price={dish.price}
+                            count={dish.count}
+                            dishPlus={dishPlus}
+                            dishDelete={dishDelete}
+                            dishMinus={dishMinus} />
                     ))}
                 </ul>
                 <div className={styles['result-price']}>Общая стоимость <span>{totalPrice}</span> ₽</div>

@@ -1,48 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import "./App.css";
-import Header from "./components/Header/Header";
-import DishCard from "./components/DishCart/DishCart";
-import CartModal from "./components/CartModal/CartModal";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import PlacingOrder from "./pages/PlacingOrder";
-
-const Main = (props) => {
-  const {addCartId, cartDishes, dishDelete, dishMinus, dishPlus, isCartDishes, dishes} = props;
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [openCart, setOpenCart] = useState(false);
-
-  return (
-    <>
-      <Header
-        setSelectedCategory={setSelectedCategory}
-        setOpenCart={setOpenCart}
-      />
-      <CartModal
-        openCart={openCart}
-        setOpenCart={setOpenCart}
-        cartDishes={cartDishes}
-        dishPlus={dishPlus}
-        dishMinus={dishMinus}
-        dishDelete={dishDelete}
-      />
-      <div className="container">
-        <ul className="dishes-list">
-          {dishes.filter(
-              (dish) =>
-                dish.category === selectedCategory || selectedCategory === "All"
-            )
-            .map((dish) => (
-              <DishCard
-                key={dish.id}
-                dish={dish}
-                addCartId={addCartId}
-              />
-            ))}
-        </ul>
-      </div>
-    </>
-  );
-};
+import PlacingOrder from "./pages/PlacingOrder/PlacingOrder";
+import { Main } from "./pages/Main/Main";
 
 function App() {
 
@@ -53,9 +13,6 @@ function App() {
     fetch("/db.json")
       .then((response) => response.json())
       .then((data) => setDishes(data));
-  }, []);
-
-  useEffect(() => {
     const savedCartDishes = localStorage.getItem("cartDishes");
     if (savedCartDishes) {
       setCartDishes(JSON.parse(savedCartDishes));
@@ -120,16 +77,16 @@ function App() {
     }
   };
 
-  const dishDelete = (id) => {
-    const existindItemIndex = cartDishes.findIndex((dish) => dish.id === id);
-    if (existindItemIndex >= 0) {
-      setCartDishes(
-        cartDishes
-          .slice(0, existindItemIndex)
-          .concat(cartDishes.slice(existindItemIndex + 1))
-      );
-    }
+  const dishDelete = (id) => { 
+    setCartDishes(
+      cartDishes.filter((dish) => dish.id !== id)
+    ); 
   };
+
+  const totalPrice = useMemo(() => {
+    return cartDishes.reduce((total, dish) => total + dish.price * dish.count, 0);
+  }, [cartDishes]);
+  
 
   return (
     <BrowserRouter>
@@ -140,8 +97,11 @@ function App() {
                                 dishPlus={dishPlus}
                                 dishMinus={dishMinus}
                                 dishDelete={dishDelete}
-                                dishes={dishes}/>}/>
-        <Route path="/PlacingOrder" element={<PlacingOrder cartDishes={cartDishes} setCartDishes={setCartDishes} />} />
+                                dishes={dishes}
+                                totalPrice={totalPrice} />}/>
+        <Route path="/PlacingOrder" element={<PlacingOrder 
+                                              cartDishes={cartDishes}
+                                              totalPrice={totalPrice} />} />
       </Routes>
     </BrowserRouter>
   );

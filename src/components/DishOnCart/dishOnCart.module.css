@@ -1,0 +1,23 @@
+.dish-cart {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    column-gap: 20px;
+}
+
+.dish-name,
+.dish-count,
+.dish-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: slategray;
+}
+
+.dish-cart__buttons {
+    border: none;
+    color: darkred;
+    background: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    user-select: none;
+    cursor: pointer;
+}

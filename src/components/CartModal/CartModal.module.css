@@ -30,6 +30,8 @@
 .close-modal {
     color: darkred;
     font-size: 1.5rem;
+    background: none;
+    border: none;
     font-weight: bold;
     user-select: none;
     cursor: pointer;
@@ -59,30 +61,6 @@
     display: flex;
     flex-direction: column;
     row-gap: 20px;
-}
-
-.dish-cart {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    column-gap: 20px;
-}
-
-.dish-name,
-.dish-count,
-.dish-price {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: slategray;
-}
-
-.dish-cart__buttons {
-    border: none;
-    color: darkred;
-    background: none;
-    font-size: 1.2rem;
-    font-weight: bold;
-    user-select: none;
-    cursor: pointer;
 }
 
 .result-price {
